@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.36202.13
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DreamDay", "DreamDay\DreamDay.csproj", "{3D53940F-D73E-41CF-9833-5A571177C60F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3D53940F-D73E-41CF-9833-5A571177C60F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3D53940F-D73E-41CF-9833-5A571177C60F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3D53940F-D73E-41CF-9833-5A571177C60F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3D53940F-D73E-41CF-9833-5A571177C60F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {F7DB2F64-21B0-4B84-89E2-F62ECA4C697E}
+	EndGlobalSection
+EndGlobal
