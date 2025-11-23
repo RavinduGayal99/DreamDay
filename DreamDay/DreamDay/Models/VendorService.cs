@@ -1,0 +1,12 @@
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+namespace DreamDay.Models {
+    public class VendorService {
+        [Key] public int Id { get; set; }
+        [Required] public string Name { get; set; }
+        public string? Description { get; set; }
+        [Column(TypeName = "decimal(18,2)")] public decimal Price { get; set; }
+        public int VendorId { get; set; }
+        public virtual Vendor Vendor { get; set; }
+    }
+}
