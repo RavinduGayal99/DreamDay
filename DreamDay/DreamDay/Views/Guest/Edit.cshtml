@@ -1,0 +1,19 @@
+﻿@model DreamDay.Models.Guest
+@{
+	ViewData["Title"] = "Edit Guest";
+}
+<h1>Edit Guest</h1>
+<hr />
+<div class="row">
+	<div class="col-md-4">
+		<form asp-action="Edit">
+			<input type="hidden" asp-for="Id" /><input type="hidden" asp-for="WeddingId" />
+			<div class="form-group mb-2"><label asp-for="Name" class="control-label"></label><input asp-for="Name" class="form-control" /></div>
+			<div class="form-group mb-2"><label asp-for="Email" class="control-label"></label><input asp-for="Email" class="form-control" /></div>
+			<div class="form-group mb-2"><label asp-for="RsvpStatus" class="control-label"></label><select asp-for="RsvpStatus" asp-items="Html.GetEnumSelectList<DreamDay.Models.GuestStatus>()" class="form-control"></select></div>
+			<div class="form-group mb-2"><label asp-for="MealPreference" class="control-label"></label><input asp-for="MealPreference" class="form-control" /></div>
+			<div class="form-group mt-3"><input type="submit" value="Save" class="btn btn-primary" /></div>
+		</form>
+	</div>
+</div>
+<div><a asp-action="Index">Back to List</a></div>

@@ -1,0 +1,19 @@
+﻿@model DreamDay.Models.ProjectTask
+@{
+	ViewData["Title"] = "Create Task";
+}
+iewData["Title"] = "Create Task";
+}
+<h1>Create a New Task</h1>
+<hr />
+<div class="row">
+	<div class="col-md-6">
+		<form asp-action="Create">
+			<div asp-validation-summary="ModelOnly" class="text-danger"></div><input type="hidden" asp-for="WeddingId" />
+			<div class="form-group mb-3"><label asp-for="Description" class="control-label"></label><input asp-for="Description" class="form-control" /></div>
+			<div class="form-group mb-3"><label asp-for="DueDate" class="control-label"></label><input asp-for="DueDate" type="date" class="form-control" /></div>
+			<div class="form-group mb-3"><label asp-for="Category" class="control-label"></label><select asp-for="Category" asp-items="Html.GetEnumSelectList<DreamDay.Models.TaskCategory>()" class="form-control"></select></div>
+			<div class="form-group"><input type="submit" value="Create" class="btn btn-primary" /> <a asp-action="Index" class="btn btn-secondary">Back to List</a></div>
+		</form>
+	</div>
+</div>

@@ -1,0 +1,41 @@
+﻿@model DreamDay.Models.Budget
+@{
+	ViewData["Title"] = "Budget Tracker"; var totalAllocated = Model.BudgetCategories.Sum(c => c.AllocatedAmount); var totalSpent = Model.BudgetCategories.SelectMany(c => c.Expenses).Sum(e => e.Amount);
+}
+<h1>Budget Tracker</h1>
+<h4>Total Budget: @ViewBag.TotalBudget.ToString("C")</h4>
+<div class="row mb-4"><div class="col"><strong>Total Allocated:</strong> @totalAllocated.ToString("C")</div><div class="col"><strong>Total Spent:</strong> <span class="text-danger">@totalSpent.ToString("C")</span></div><div class="col"><strong>Remaining Budget:</strong> @(ViewBag.TotalBudget - totalSpent).ToString("C")</div></div>
+<div class="row">
+	<div class="col-md-8">
+		<h3>Spending Categories</h3>
+		@foreach (var category in Model.BudgetCategories)
+		{
+			var categorySpent = category.Expenses.Sum(e => e.Amount);
+			<div class="card mb-3">
+				<div class="card-header"><h5>@category.Name <small class="text-muted">(@categorySpent.ToString("C") / @category.AllocatedAmount.ToString("C"))</small></h5></div>
+				<div class="card-body">
+					<h6>Expenses</h6><ul>@foreach (var expense in category.Expenses){
+					<li>@expense.Description: @expense.Amount.ToString("C")</li>
+				}
+</ul><hr />
+				<form asp-action="AddExpense" method="post">
+					<div asp-validation-summary="ModelOnly" class="text-danger"></div><input type="hidden" name="budgetCategoryId" value="@category.Id" />
+					<div class="row g-3">
+						<div class="col-auto"><input type="text" name="description" class="form-control" placeholder="Expense Description" required></div>
+						<div class="col-auto"><input type="number" step="0.01" name="amount" class="form-control" placeholder="Amount" required></div>
+						<div class="col-auto"><button type="submit" class="btn btn-sm btn-outline-primary">Add Expense</button></div>
+					</div>
+				</form>
+			</div>
+		</div>
+				}
+	</div>
+	<div class="col-md-4">
+		<h3>Add New Category</h3><form asp-action="AddCategory" method="post">
+			<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+			<div class="form-group mb-2"><label>Category Name</label><input type="text" name="name" class="form-control" required /></div>
+			<div class="form-group mb-2"><label>Allocated Amount</label><input type="number" step="0.01" name="allocatedAmount" class="form-control" required /></div>
+			<button type="submit" class="btn btn-success">Add Category</button>
+		</form>
+	</div>
+</div>

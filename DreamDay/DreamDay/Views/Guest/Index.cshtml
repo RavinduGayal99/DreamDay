@@ -1,0 +1,12 @@
+﻿@model IEnumerable<DreamDay.Models.Guest>
+@{
+	ViewData["Title"] = "Guest List";
+}
+<h1>Guest List</h1><p><a asp-action="Create" class="btn btn-primary">Add Guest</a></p>
+<table class="table">
+	<thead><tr><th>Name</th><th>RSVP Status</th><th>Meal Preference</th><th></th></tr></thead>
+	<tbody>@foreach (var item in Model){
+	<tr><td>@Html.DisplayFor(modelItem => item.Name)</td><td>@Html.DisplayFor(modelItem => item.RsvpStatus)</td><td>@Html.DisplayFor(modelItem => item.MealPreference)</td><td><a asp-action="Edit" asp-route-id="@item.Id">Edit</a> | <a asp-action="Delete" asp-route-id="@item.Id">Delete</a></td></tr>
+		}
+</tbody>
+</table>

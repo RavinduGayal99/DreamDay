@@ -1,0 +1,22 @@
+﻿@model IEnumerable<DreamDay.Models.VendorBooking>
+@{
+    ViewData["Title"] = "Vendor Bookings";
+}
+
+<h1>Vendor Bookings for @ViewBag.WeddingTitle</h1>
+<p><a asp-action="Create" asp-route-weddingId="@ViewBag.WeddingId" class="btn btn-primary">Book New Vendor</a></p>
+
+<table class="table">
+    <thead><tr><th>Vendor</th><th>Cost</th><th>Status</th><th>Notes</th></tr></thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Vendor.Name</td>
+                <td>@item.Cost.ToString("C")</td>
+                <td>@item.Status</td>
+                <td>@item.Notes</td>
+            </tr>
+        }
+    </tbody>
+</table>

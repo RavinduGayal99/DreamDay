@@ -1,0 +1,18 @@
+﻿@model DreamDay.Models.Vendor
+@{
+	ViewData["Title"] = "Create Vendor";
+}
+<h1>Create Vendor</h1>
+<hr />
+<div class="row">
+	<div class="col-md-6">
+		<form asp-action="CreateVendor">
+			<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+			<div class="form-group mb-3"><label asp-for="Name" class="control-label"></label><input asp-for="Name" class="form-control" /></div>
+			<div class="form-group mb-3"><label asp-for="Category" class="control-label"></label><input asp-for="Category" class="form-control" placeholder="e.g., Photographer, Florist" /></div>
+			<div class="form-group mb-3"><label asp-for="ContactInfo" class="control-label"></label><input asp-for="ContactInfo" class="form-control" /></div>
+			<div class="form-group mb-3"><label asp-for="Description" class="control-label"></label><textarea asp-for="Description" class="form-control"></textarea></div>
+			<div class="form-group"><input type="submit" value="Create" class="btn btn-primary" /></div>
+		</form>
+	</div>
+</div>

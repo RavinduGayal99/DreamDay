@@ -1,0 +1,12 @@
+﻿@{
+    ViewData["Title"] = "Admin Dashboard";
+}
+<h1>Admin Dashboard</h1>
+<p>Welcome, Administrator. Use the links below to manage the system.</p>
+
+<div class="list-group">
+    <a asp-action="Users" class="list-group-item list-group-item-action">Manage Users</a>
+    <a asp-action="Vendors" class="list-group-item list-group-item-action">Manage Vendors</a>
+    <a asp-action="SystemDashboard" class="list-group-item list-group-item-action">System Dashboard & Activity</a>
+    <a asp-action="Reports" class="list-group-item list-group-item-action">Generate Reports</a>
+</div>

@@ -1,0 +1,24 @@
+﻿@model DreamDay.ViewModels.DashboardViewModel
+@{
+	ViewData["Title"] = "My Dashboard";
+}
+<h1>@Model.CurrentWedding.Title</h1><p class="lead">Wedding Date: @Model.CurrentWedding.WeddingDate.ToShortDateString()</p>
+<div class="row">
+	<div class="col-md-4"><div class="card text-center"><div class="card-body"><h5 class="card-title">Days Remaining</h5><p class="card-text fs-1">@Model.DaysRemaining</p></div></div></div>
+	<div class="col-md-4"><div class="card"><div class="card-body"><h5 class="card-title">Task Progress</h5><p>@Model.CompletedTasks of @Model.TotalTasks tasks completed.</p><div class="progress"><div class="progress-bar" role="progressbar" style="width: @Model.TaskCompletionPercentage.ToString("0.00")%;" aria-valuenow="@Model.TaskCompletionPercentage" aria-valuemin="0" aria-valuemax="100">@Model.TaskCompletionPercentage.ToString("0")%</div></div></div></div></div>
+	<div class="col-md-4"><div class="card"><div class="card-body"><h5 class="card-title">Budget Overview</h5><p>@Model.BudgetSpent.ToString("C") spent of @Model.BudgetTotal.ToString("C")</p><div class="progress"><div class="progress-bar bg-success" role="progressbar" style="width: @Model.BudgetProgressPercentage.ToString("0.00")%;" aria-valuenow="@Model.BudgetProgressPercentage" aria-valuemin="0" aria-valuemax="100"></div></div></div></div></div>
+</div>
+<div class="row mt-4">
+	<div class="col-md-12">
+		<h3>Upcoming Tasks</h3><ul class="list-group">
+			@foreach (var task in Model.UpcomingTasks)
+			{
+				<li class="list-group-item">@task.Description - <small>Due: @task.DueDate.ToShortDateString()</small></li>
+			}
+			@if (!Model.UpcomingTasks.Any())
+			{
+				<li class="list-group-item">No upcoming tasks.</li>
+			}
+		</ul>
+	</div>
+</div>

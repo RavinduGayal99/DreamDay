@@ -1,0 +1,29 @@
+﻿@model DreamDay.Models.VendorBooking
+@{
+    ViewData["Title"] = "Create Booking";
+}
+
+<h1>Create New Booking</h1>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <input type="hidden" asp-for="WeddingId" value="@ViewBag.WeddingId" />
+            <div class="form-group mb-2">
+                <label asp-for="VendorId" class="control-label"></label>
+                <select asp-for="VendorId" class="form-control" asp-items="@(new SelectList(ViewBag.Vendors, "Id", "Name"))"></select>
+            </div>
+            <div class="form-group mb-2">
+                <label asp-for="Cost" class="control-label"></label>
+                <input asp-for="Cost" class="form-control" />
+            </div>
+            <div class="form-group mb-2">
+                <label asp-for="Notes" class="control-label"></label>
+                <textarea asp-for="Notes" class="form-control"></textarea>
+            </div>
+            <div class="form-group mt-3">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>

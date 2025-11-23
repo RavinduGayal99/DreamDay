@@ -1,0 +1,98 @@
+﻿@model IEnumerable<DreamDay.Models.Vendor>
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Vendor Summary Report</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" />
+    <style>
+        body {
+            padding: 20px;
+        }
+
+        .chart-container {
+            max-width: 800px;
+            margin: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="text-center">Vendor Summary Report</h1>
+        <p class="text-center">Generated on: @DateTime.Now.ToString("F")</p>
+        <hr />
+
+        <h3>Vendor Distribution by Category</h3>
+        <div class="chart-container mb-5">
+            <canvas id="vendorCategoryChart"></canvas>
+        </div>
+
+        <h3>Detailed Vendor List</h3>
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr><th>ID</th><th>Name</th><th>Category</th><th>Contact Info</th></tr>
+            </thead>
+            <tbody>
+                @foreach (var vendor in Model)
+                {
+                    <tr>
+                        <td>@vendor.Id</td>
+                        <td>@vendor.Name</td>
+                        <td>@vendor.Category</td>
+                        <td>@vendor.ContactInfo</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        // --- THIS IS THE GUARANTEED FIX ---
+
+        // Step 1: Serialize the entire C# model into a single JavaScript variable.
+        // The model is IEnumerable<Vendor>.
+        const vendorReportData = @Html.Raw(Json.Serialize(Model));
+
+        // Step 2: Process this data using pure JavaScript to prepare for the chart.
+        const categoryCounts = {};
+        vendorReportData.forEach(vendor => {
+            // The property name in JSON is camelCase, so 'category' not 'Category'.
+            const category = vendor.category;
+            if (categoryCounts[category]) {
+                categoryCounts[category]++;
+            } else {
+                categoryCounts[category] = 1;
+            }
+        });
+
+        const vendorCategoryLabels = Object.keys(categoryCounts);
+        const vendorCategoryData = Object.values(categoryCounts);
+
+        // Step 3: Build the chart with the processed JavaScript data.
+        const ctx = document.getElementById('vendorCategoryChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: vendorCategoryLabels,
+                datasets: [{
+                    label: '# of Vendors',
+                    data: vendorCategoryData,
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.5)',
+                        'rgba(54, 162, 235, 0.5)',
+                        'rgba(255, 206, 86, 0.5)',
+                        'rgba(75, 192, 192, 0.5)',
+                        'rgba(153, 102, 255, 0.5)',
+                        'rgba(255, 159, 64, 0.5)'
+                    ]
+                }]
+            },
+            options: { scales: { y: { beginAtZero: true, ticks: { stepSize: 1 } } } }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,91 @@
+﻿@model IEnumerable<DreamDay.ViewModels.UserDetailsViewModel>
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>User Summary Report</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" />
+    <style>
+        body {
+            padding: 20px;
+        }
+
+        .chart-container {
+            max-width: 600px;
+            margin: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="text-center">User Summary Report</h1>
+        <p class="text-center">Generated on: @DateTime.Now.ToString("F")</p>
+        <hr />
+
+        <h3>User Distribution by Role</h3>
+        <div class="chart-container mb-5">
+            <canvas id="userRoleChart"></canvas>
+        </div>
+
+        <h3>Detailed User List</h3>
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr><th>ID</th><th>Name</th><th>Email</th><th>Date Created</th><th>Roles</th></tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.User.Id</td>
+                        <td>@item.User.Name</td>
+                        <td>@item.User.Email</td>
+                        <td>@item.User.CreatedAt.ToShortDateString()</td>
+                        <td>@string.Join(", ", item.Roles)</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        // --- THIS IS THE GUARANTEED FIX ---
+
+        // Step 1: Serialize the entire C# model into a single JavaScript variable.
+        // The model is IEnumerable<UserDetailsViewModel>.
+        const userReportData = @Html.Raw(Json.Serialize(Model));
+
+        // Step 2: Process this data using pure JavaScript to prepare for the chart.
+        const roleCounts = {};
+        userReportData.forEach(item => {
+            // The property name in JSON is camelCase, so 'roles' not 'Roles'.
+            item.roles.forEach(role => {
+                if (roleCounts[role]) {
+                    roleCounts[role]++;
+                } else {
+                    roleCounts[role] = 1;
+                }
+            });
+        });
+
+        const userRoleLabels = Object.keys(roleCounts);
+        const userRoleData = Object.values(roleCounts);
+
+        // Step 3: Build the chart with the processed JavaScript data.
+        const ctx = document.getElementById('userRoleChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'pie',
+            data: {
+                labels: userRoleLabels,
+                datasets: [{
+                    data: userRoleData,
+                    backgroundColor: ['#0d6efd', '#198754', '#dc3545', '#ffc107']
+                }]
+            }
+        });
+    </script>
+</body>
+</html>

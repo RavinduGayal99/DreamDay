@@ -1,0 +1,22 @@
+﻿@model IEnumerable<DreamDay.Models.Message>
+@{
+	ViewData["Title"] = "Messages"; var otherUser = ViewBag.OtherUser as DreamDay.Models.User;
+}
+@if (otherUser != null)
+{
+	<h1>Conversation with @otherUser.Name</h1>
+	<div class="border p-3 mb-3" style="height: 400px; overflow-y: scroll;">
+		@foreach (var message in Model)
+		{
+			<p class="@(message.SenderId == otherUser.Id ? "text-start" : "text-end")"><strong>@(message.SenderId == otherUser.Id ? otherUser.Name : "Me"):</strong> @message.Content<br /><small class="text-muted">@message.SentAt.ToString("g")</small></p>
+		}
+	</div>
+	<form asp-action="Send" method="post">
+		<input type="hidden" name="receiverId" value="@otherUser.Id" />
+		<div class="input-group"><input type="text" name="content" class="form-control" placeholder="Type your message..." /><button type="submit" class="btn btn-primary">Send</button></div>
+	</form>
+}
+else
+{
+	<p>You do not have anyone to message yet.</p>
+}

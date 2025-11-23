@@ -1,0 +1,28 @@
+﻿@model IEnumerable<DreamDay.Models.Wedding>
+@{
+    ViewData["Title"] = "Planner Dashboard";
+}
+
+<h1>My Managed Weddings</h1>
+<p>Select a wedding to view its dashboard and manage its details.</p>
+
+<div class="list-group">
+    @foreach (var wedding in Model)
+    {
+        <div class="list-group-item list-group-item-action">
+            <div class="d-flex w-100 justify-content-between">
+                <h5 class="mb-1">@wedding.Title</h5>
+                <small>@wedding.WeddingDate.ToShortDateString()</small>
+            </div>
+            <p class="mb-1">Client: @wedding.Couple.User.Name</p>
+            <small>Status: @wedding.Status</small>
+            <div class="mt-2">
+                <a asp-controller="Dashboard" asp-action="Index" asp-route-id="@wedding.Id" class="btn btn-sm btn-primary">View Dashboard</a>
+                @* NEW: Links for planners to manage features *@
+                <a asp-controller="Checklist" asp-action="Index" asp-route-weddingId="@wedding.Id" class="btn btn-sm btn-secondary">Manage Checklist</a>
+                <a asp-controller="Booking" asp-action="Index" asp-route-weddingId="@wedding.Id" class="btn btn-sm btn-success">Manage Bookings</a>
+                <a asp-controller="Report" asp-action="BudgetReport" asp-route-weddingId="@wedding.Id" class="btn btn-sm btn-info" target="_blank">Generate Budget Report</a>
+            </div>
+        </div>
+    }
+</div>

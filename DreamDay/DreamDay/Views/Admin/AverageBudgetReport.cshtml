@@ -1,0 +1,28 @@
+﻿@model IEnumerable<dynamic>
+@{
+    Layout = null; var average = Model.Any() ? Model.Average(b => (decimal)b.Budget) : 0;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Average Budget Report</title>@*... (include bootstrap and chart.js links) ...*@</head>
+<body>
+    <div class="container">
+        <h1 class="text-center">Wedding Budgets Analysis</h1>
+        <div class="alert alert-info">
+            <h4>Average Wedding Budget: @average.ToString("C")</h4>
+        </div>
+        <div class="chart-container mb-5"><canvas id="budgetChart"></canvas></div>
+    </div>
+    <script>
+        const reportData = @Html.Raw(Json.Serialize(Model));
+        const labels = reportData.map(d => d.title);
+        const data = reportData.map(d => d.budget);
+        const ctx = document.getElementById('budgetChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'line',
+            data: { labels: labels, datasets: [{ label: 'Budget', data: data, borderColor: 'rgba(255, 99, 132, 1)', fill: false }] }
+        });
+    </script>
+</body>
+</html>

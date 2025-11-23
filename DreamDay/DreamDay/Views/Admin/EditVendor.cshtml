@@ -1,0 +1,18 @@
+﻿@model DreamDay.Models.Vendor
+@{
+	ViewData["Title"] = "Edit Vendor";
+}
+<h1>Edit Vendor</h1>
+<hr />
+<div class="row">
+	<div class="col-md-4">
+		<form asp-action="EditVendor">
+			<input type="hidden" asp-for="Id" />
+			<div class="form-group mb-2"><label asp-for="Name"></label><input asp-for="Name" class="form-control" /></div>
+			<div class="form-group mb-2"><label asp-for="Category"></label><input asp-for="Category" class="form-control" /></div>
+			<div class="form-group mb-2"><label asp-for="ContactInfo"></label><input asp-for="ContactInfo" class="form-control" /></div>
+			<div class="form-group mb-2"><label asp-for="Description"></label><textarea asp-for="Description" class="form-control"></textarea></div>
+			<div class="form-group mt-3"><input type="submit" value="Save" class="btn btn-primary" /></div>
+		</form>
+	</div>
+</div>

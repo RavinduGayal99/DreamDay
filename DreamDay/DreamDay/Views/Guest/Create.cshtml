@@ -1,0 +1,18 @@
+﻿@model DreamDay.Models.Guest
+@{
+	ViewData["Title"] = "Add Guest";
+}
+<h1>Add Guest</h1>
+<hr />
+<div class="row">
+	<div class="col-md-4">
+		<form asp-action="Create">
+			<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+			<div class="form-group mb-2"><label asp-for="Name" class="control-label"></label><input asp-for="Name" class="form-control" /></div>
+			<div class="form-group mb-2"><label asp-for="Email" class="control-label"></label><input asp-for="Email" class="form-control" /></div>
+			<div class="form-group mb-2"><label asp-for="MealPreference" class="control-label"></label><input asp-for="MealPreference" class="form-control" /></div>
+			<div class="form-group mt-3"><input type="submit" value="Create" class="btn btn-primary" /></div>
+		</form>
+	</div>
+</div>
+<div><a asp-action="Index">Back to List</a></div>

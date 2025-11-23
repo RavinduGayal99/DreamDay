@@ -1,0 +1,19 @@
+﻿@model DreamDay.ViewModels.LoginViewModel
+@{
+	ViewData["Title"] = "Login";
+}
+<div class="row">
+	<div class="col-md-6 offset-md-3">
+		<h2>Login to your account</h2>
+		@if (TempData["Error"] != null)
+		{
+			<div class="alert alert-danger">@TempData["Error"]</div>
+		}
+		<form asp-action="Login">
+			<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+			<div class="form-group mb-3"><label asp-for="Email" class="control-label"></label><input asp-for="Email" class="form-control" /><span asp-validation-for="Email" class="text-danger"></span></div>
+			<div class="form-group mb-3"><label asp-for="Password" class="control-label"></label><input asp-for="Password" class="form-control" /><span asp-validation-for="Password" class="text-danger"></span></div>
+			<div class="form-group"><input type="submit" value="Login" class="btn btn-primary" /></div>
+		</form>
+	</div>
+</div>

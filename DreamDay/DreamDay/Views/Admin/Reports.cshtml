@@ -1,0 +1,14 @@
+﻿@{
+    ViewData["Title"] = "Generate Reports";
+}
+
+<h1>Generate System Reports</h1>
+<p>Select a report to generate a printer-friendly summary.</p>
+
+<div class="list-group mt-4">
+    <a asp-action="GenerateUserReport" target="_blank" class="list-group-item list-group-item-action">User Summary Report</a>
+    <a asp-action="GenerateVendorReport" target="_blank" class="list-group-item list-group-item-action">Vendor List Report</a>
+    @* NEW: Links to new reports *@
+    <a asp-action="GeneratePopularityReport" target="_blank" class="list-group-item list-group-item-action">Venue Popularity Report</a>
+    <a asp-action="GenerateBudgetReport" target="_blank" class="list-group-item list-group-item-action">Average Budgets Report</a>
+</div>

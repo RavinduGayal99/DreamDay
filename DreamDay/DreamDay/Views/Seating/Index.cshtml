@@ -1,0 +1,34 @@
+﻿@{
+	ViewData["Title"] = "Seating Arrangement";
+}
+<h1>Seating Arrangement</h1>
+<div class="row">
+	<div class="col-md-8">
+		<h3>Tables</h3><div class="row">
+			@foreach (var table in ViewBag.Tables)
+			{
+				<div class="col-md-6 mb-3">
+					<div class="card">
+						<div class="card-header">@table.Name (@table.SeatedGuests.Count / @table.Capacity)</div>
+						<ul class="list-group list-group-flush">@foreach (var guest in table.SeatedGuests){
+						<li class="list-group-item">@guest.Name</li>
+					}
+</ul>
+				</div>
+			</div>
+						}
+		</div>
+	</div>
+	<div class="col-md-4">
+		<h4>Add Table</h4><form asp-action="AddTable" method="post" class="mb-4">
+			<div class="form-group mb-2"><input type="text" name="name" class="form-control" placeholder="Table Name" required /></div>
+			<div class="form-group mb-2"><input type="number" name="capacity" class="form-control" placeholder="Capacity" required /></div>
+			<button type="submit" class="btn btn-success">Add Table</button>
+		</form><hr />
+		<h4>Assign Guest</h4><form asp-action="AssignGuest" method="post">
+			<div class="form-group mb-2"><label>Guest</label><select name="guestId" asp-items="ViewBag.UnseatedGuests" class="form-control"><option>-- Select Guest --</option></select></div>
+			<div class="form-group mb-2"><label>Table</label><select name="tableId" asp-items="ViewBag.TableList" class="form-control"><option>-- Select Table --</option></select></div>
+			<button type="submit" class="btn btn-primary">Assign</button>
+		</form>
+	</div>
+</div>

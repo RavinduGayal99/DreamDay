@@ -1,0 +1,12 @@
+﻿@model IEnumerable<DreamDay.Models.ActivityLog>
+@{
+	ViewData["Title"] = "System Activity Log";
+}
+<h1>System Activity Log</h1><p>Showing the last 100 actions performed in the system.</p>
+<table class="table table-striped">
+	<thead><tr><th>Timestamp</th><th>User</th><th>Action</th></tr></thead>
+	<tbody>@foreach (var log in Model){
+	<tr><td>@log.Timestamp.ToString("g")</td><td>@(log.User?.Email ?? "System")</td><td>@log.ActionDescription</td></tr>
+		}
+</tbody>
+</table>

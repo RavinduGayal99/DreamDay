@@ -1,0 +1,35 @@
+﻿@model IEnumerable<dynamic>
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Venue Popularity Report</title>@*... (include bootstrap and chart.js links) ...*@</head>
+<body>
+    <div class="container">
+        <h1 class="text-center">Venue Popularity Report</h1>
+        <div class="chart-container mb-5"><canvas id="popularityChart"></canvas></div>
+        <table class="table table-bordered">
+            <thead><tr><th>Venue Name</th><th>Number of Bookings</th></tr></thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr><td>@item.Name</td><td>@item.Count</td></tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <script>
+        const reportData = @Html.Raw(Json.Serialize(Model));
+        const labels = reportData.map(d => d.name);
+        const data = reportData.map(d => d.count);
+        const ctx = document.getElementById('popularityChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'bar',
+            data: { labels: labels, datasets: [{ label: 'Bookings', data: data, backgroundColor: 'rgba(75, 192, 192, 0.5)' }] },
+            options: { indexAxis: 'y' }
+        });
+    </script>
+</body>
+</html>

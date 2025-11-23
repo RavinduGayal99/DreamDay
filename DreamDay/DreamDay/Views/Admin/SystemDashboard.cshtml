@@ -1,0 +1,100 @@
+﻿@model DreamDay.ViewModels.SystemDashboardViewModel
+@{
+    ViewData["Title"] = "System Dashboard";
+}
+
+<h1>System Dashboard</h1>
+<hr />
+
+<div class="row">
+    <!-- Live System Usage -->
+    <div class="col-md-6">
+        <h3>Live System Usage (Local Machine)</h3>
+        <div class="card">
+            <div class="card-body">
+                <h5>CPU Usage</h5>
+                <div class="progress mb-2">
+                    <div id="cpuProgress" class="progress-bar" role="progressbar" style="width: 0%;">0%</div>
+                </div>
+                <h5>Available Memory</h5>
+                <p><span id="memValue">...</span> MB</p>
+            </div>
+        </div>
+    </div>
+    <!-- Application Data Charts -->
+    <div class="col-md-6">
+        <h3>Application Data</h3>
+        <div class="card">
+            <div class="card-body">
+                <h5>Users by Role</h5>
+                <canvas id="usersByRoleChart"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row mt-4">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-body">
+                <h5>Weddings by Status</h5>
+                <canvas id="weddingsByStatusChart"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="~/js/signalr/dist/browser/signalr.min.js"></script>
+
+    <script>
+        // Live System Usage Chart with SignalR
+        const connection = new signalR.HubConnectionBuilder().withUrl("/systemUsageHub").build();
+
+        connection.on("ReceiveSystemUsage", function (cpu, mem) {
+            var cpuPercent = cpu.toFixed(2);
+            $('#cpuProgress').css('width', cpuPercent + '%').text(cpuPercent + '%');
+            $('#memValue').text(mem.toFixed(0));
+        });
+
+        connection.start().then(function () {
+            // Request data every 2 seconds
+            setInterval(function () {
+                connection.invoke("GetSystemUsage").catch(function (err) {
+                    return console.error(err.toString());
+                });
+            }, 2000);
+        }).catch(function (err) {
+            return console.error(err.toString());
+        });
+
+        // Users by Role Chart
+        var uCtx = document.getElementById('usersByRoleChart').getContext('2d');
+        new Chart(uCtx, {
+            type: 'doughnut',
+            data: {
+                labels: @Html.Raw(Json.Serialize(Model.UsersByRoleChart.Labels)),
+                datasets: [{
+                    label: 'Users by Role',
+                    data: @Html.Raw(Json.Serialize(Model.UsersByRoleChart.Data)),
+                    backgroundColor: ['#0d6efd', '#198754', '#dc3545']
+                }]
+            }
+        });
+
+        // Weddings by Status Chart
+        var wCtx = document.getElementById('weddingsByStatusChart').getContext('2d');
+        new Chart(wCtx, {
+            type: 'bar',
+            data: {
+                labels: @Html.Raw(Json.Serialize(Model.WeddingsByStatusChart.Labels)),
+                datasets: [{
+                    label: 'Number of Weddings',
+                    data: @Html.Raw(Json.Serialize(Model.WeddingsByStatusChart.Data)),
+                    backgroundColor: ['#ffc107', '#0dcaf0', '#6f42c1', '#fd7e14']
+                }]
+            },
+            options: { scales: { y: { beginAtZero: true } } }
+        });
+    </script>
+}

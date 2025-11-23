@@ -1,0 +1,15 @@
+﻿@model DreamDay.Models.Wedding
+@{
+	ViewData["Title"] = "Create Your Wedding";
+}
+<h2>Let's Plan Your Dream Day!</h2><p>Fill out some basic details to get started.</p>
+<div class="row">
+	<div class="col-md-8">
+		<form asp-action="Create">
+			<div class="form-group mb-3"><label asp-for="Title" class="control-label"></label><input asp-for="Title" class="form-control" placeholder="e.g., The Smith & Jones Wedding" /></div>
+			<div class="form-group mb-3"><label asp-for="WeddingDate" class="control-label"></label><input asp-for="WeddingDate" type="date" class="form-control" /></div>
+			<div class="form-group mb-3"><label asp-for="Budget" class="control-label"></label><input asp-for="Budget" class="form-control" /></div>
+			<div class="form-group"><input type="submit" value="Start Planning" class="btn btn-success" /></div>
+		</form>
+	</div>
+</div>

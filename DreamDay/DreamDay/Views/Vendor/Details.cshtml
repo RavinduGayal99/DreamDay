@@ -1,0 +1,29 @@
+﻿@model DreamDay.Models.Vendor
+@{
+	ViewData["Title"] = "Vendor Details";
+}
+<h1>@Model.Name</h1>
+<h4>@Model.Category</h4>
+<hr />
+<div><p><strong>Description:</strong> @Model.Description</p><p><strong>Contact:</strong> @Model.ContactInfo</p></div>
+<div class="mt-4">
+	<h3>Services Offered</h3><ul class="list-group">
+		@foreach (var service in Model.Services)
+		{
+			<li class="list-group-item">@service.Name - @service.Price.ToString("C")</li>
+		}
+	</ul>
+</div>
+<div class="mt-4">
+	<h3>Reviews</h3>
+	@foreach (var review in Model.Reviews)
+	{
+		<div class="card bg-light mb-2">
+			<div class="card-body">
+				<p><strong>Rating: @review.Rating / 5</strong></p><p>"@review.Comment"</p>
+				<footer class="blockquote-footer">@review.Couple.User.Name on @review.DatePosted.ToShortDateString()</footer>
+			</div>
+		</div>
+	}
+</div>
+<div class="mt-4"><a asp-action="Index">Back to Catalog</a></div>
